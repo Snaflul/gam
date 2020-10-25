@@ -1,0 +1,68 @@
+// DeskTop icons
+PImage img;
+PImage close;
+PImage computer;
+PImage agent;
+
+// Global variables
+boolean startgame = false;
+boolean console = false;
+
+// a
+String word = " ";
+
+void setup() {
+  size(1000, 1000);
+  background(40, 20, 50);
+  img = loadImage("download.png");
+  close = loadImage("close.png");
+  agent = loadImage("msagent.png");
+  computer = loadImage("computer.png");
+}
+
+void draw() {
+  fill(0, 0, 70);
+  rect(400, 500, 200, 50);
+
+  // Login screen graphics + button function.
+  if (mouseX >= 400 && mouseX <= 600 && mouseY >=500 && mouseY <=550 && mousePressed && mouseButton == LEFT) {
+    startgame = true;
+  }
+
+  // Pc main screen
+  if (startgame) {
+    background(70, 20, 20);
+    image(img, 50, 50, 90, 90);
+    if (mouseX >= 50 && mouseX <= 140 && mouseY >= 50 && mouseY <= 140 && mousePressed && mouseButton == LEFT) {
+      console = true;
+    }
+    if (console) {
+      // Console graphics
+      fill(0);
+      rect(100, 100, 700, 700);
+      fill(255, 0, 0);
+      image(close, 760, 100, 40, 40);
+
+      // Console functions (i want death)
+      // Typing
+      textSize(20);
+      fill(0, 255, 0);
+      text(word, 100, 170, 700, 700);
+    }
+  }
+
+
+  // Close
+  if (mouseX >= 730 && mouseX <= 800 && mouseY >=100 && mouseY <= 170 && mousePressed && mouseButton == LEFT) {
+    console = false;
+    word = word.substring(0, word.length()-word.length());
+  }
+}
+
+// void for typing (has to have a void so it doesnt loop it 100 times)
+void type() {
+  // Deleting letter with backspace
+  if (keyCode == BACKSPACE && word.length()>0) word = word.substring(0, word.length()-1);
+  // Typing
+  if ((key >= 'A' && key <= 'Ø' || key == ' '|| key >= '0' && key <= '9' || key >= '!' && key <= '_')) word = word + key;
+}
